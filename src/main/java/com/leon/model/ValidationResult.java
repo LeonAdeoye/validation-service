@@ -19,16 +19,13 @@ public class ValidationResult
         errors = new ArrayList<>();
     }
 
-    String toString()
+    public String toString()
     {
         if(errors.size() != 0)
-        {
-
-        }
+            result = ResultType.FAILURE;
         else
-            result = ResultType.SUCCESS
+            result = ResultType.SUCCESS;
 
         return "";
     }
-
 }
