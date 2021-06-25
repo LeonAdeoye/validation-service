@@ -7,6 +7,6 @@ public class ValidationServiceImpl implements ValidationService
     @Override
     public ValidationResult validate()
     {
-        return null;
+        return new ValidationResult();
     }
 }

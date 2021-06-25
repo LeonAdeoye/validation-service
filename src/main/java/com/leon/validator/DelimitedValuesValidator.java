@@ -7,6 +7,6 @@ public class DelimitedValuesValidator implements Validator
     @Override
     public boolean validate(String input, FieldValidation fieldValidation)
     {
-        return false;
+        return fieldValidation.getType().equalsIgnoreCase(("DELIMITED_VALUES"));
     }
 }

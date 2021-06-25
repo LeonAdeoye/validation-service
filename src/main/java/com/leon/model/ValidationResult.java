@@ -14,9 +14,14 @@ public class ValidationResult
     private List<String> errors;
     private ResultType result;
 
-    ValidationResult()
+    public ValidationResult()
     {
         errors = new ArrayList<>();
+    }
+
+    public void addError(String error)
+    {
+        errors.add(error);
     }
 
     public String toString()
