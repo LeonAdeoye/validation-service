@@ -1,5 +1,6 @@
-package com.leon;
+package com.leon.controller;
 
+import com.leon.App;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

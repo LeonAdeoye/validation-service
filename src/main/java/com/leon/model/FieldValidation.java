@@ -1,7 +1,5 @@
 package com.leon.model;
 
-import sun.misc.Regexp;
-
 public class FieldValidation
 {
     private int id;
@@ -10,7 +8,7 @@ public class FieldValidation
     private String dataFormat;
     private boolean canBeEmpty;
     private String[] validValues;
-    private Regexp validRegex;
+    private String validRegex;
     private String stringFormat;
     private int maxDecimals;
     private char listDelimiter;
@@ -75,12 +73,12 @@ public class FieldValidation
         this.validValues = validValues;
     }
 
-    public Regexp getValidRegex()
+    public String getValidRegex()
     {
         return validRegex;
     }
 
-    public void setValidRegex(Regexp validRegex)
+    public void setValidRegex(String validRegex)
     {
         this.validRegex = validRegex;
     }
