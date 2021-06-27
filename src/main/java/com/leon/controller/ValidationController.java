@@ -1,11 +1,13 @@
 package com.leon.controller;
 
+import com.leon.model.ValidationConfiguration;
 import com.leon.model.ValidationResult;
 import com.leon.service.ValidationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,8 +24,14 @@ public class ValidationController
     }
 
     @RequestMapping("/validate")
-    ValidationResult validate()
+    ValidationResult validate(@RequestParam String filePath)
     {
-        return validationService.validate();
+        if(filePath.isEmpty() || filePath == null)
+        {
+            logger.error("File path cannot be null or empty");
+            throw new IllegalArgumentException("File path cannot be null or empty");
+        }
+
+        return validationService.validate(filePath, new ValidationConfiguration());
     }
 }

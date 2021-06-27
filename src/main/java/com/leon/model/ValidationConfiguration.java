@@ -8,6 +8,8 @@ public class ValidationConfiguration
     private int rowStart;
     private List<FieldValidation> listOfFieldValidations;
 
+    public ValidationConfiguration() {}
+
     public char getDelimiter()
     {
         return delimiter;
