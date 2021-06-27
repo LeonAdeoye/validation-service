@@ -10,11 +10,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileReader
+public class FileReaderServiceImpl implements FileReaderService
 {
-    private static final Logger logger = LoggerFactory.getLogger(FileReader.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileReaderServiceImpl.class);
 
-    public List<String[]> readAll(String filePath)
+    @Override
+    public List<String[]> readFile(String filePath)
     {
         List<String[]> result = new ArrayList<>();
         try (java.io.FileReader fileReader = new java.io.FileReader(filePath); CSVReader reader = new CSVReader(fileReader))
