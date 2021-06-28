@@ -1,8 +1,8 @@
 package com.leon.service;
 
-import java.util.List;
+import reactor.core.publisher.Flux;
 
 public interface FileReaderService
 {
-    List<String[]> readFile(String filePath);
+    Flux<String[]> readFile(String filePath);
 }

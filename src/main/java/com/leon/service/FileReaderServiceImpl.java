@@ -4,6 +4,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Flux;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,10 +16,10 @@ public class FileReaderServiceImpl implements FileReaderService
     private static final Logger logger = LoggerFactory.getLogger(FileReaderServiceImpl.class);
 
     @Override
-    public List<String[]> readFile(String filePath)
+    public Flux<String[]> readFile(String filePath)
     {
         List<String[]> result = new ArrayList<>();
-        try (java.io.FileReader fileReader = new java.io.FileReader(filePath); CSVReader reader = new CSVReader(fileReader))
+        try(java.io.FileReader fileReader = new java.io.FileReader(filePath); CSVReader reader = new CSVReader(fileReader))
         {
             String[] nextLine;
 
@@ -41,7 +42,7 @@ public class FileReaderServiceImpl implements FileReaderService
         }
         finally
         {
-            return result;
+            return Flux.fromIterable(result);
         }
     }
 }
