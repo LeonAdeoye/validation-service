@@ -11,7 +11,18 @@ public class FieldValidation
     private String validRegex;
     private String stringFormat;
     private int maxDecimals;
-    private char listDelimiter;
+    private String listDelimiter;
+    private String validRange;
+
+    public String getValidRange()
+    {
+        return validRange;
+    }
+
+    public void setValidRange(String validRange)
+    {
+        this.validRange = validRange;
+    }
 
     public int getId()
     {
@@ -103,12 +114,12 @@ public class FieldValidation
         this.maxDecimals = maxDecimals;
     }
 
-    public char getListDelimiter()
+    public String getListDelimiter()
     {
         return listDelimiter;
     }
 
-    public void setListDelimiter(char listDelimiter)
+    public void setListDelimiter(String listDelimiter)
     {
         this.listDelimiter = listDelimiter;
     }
