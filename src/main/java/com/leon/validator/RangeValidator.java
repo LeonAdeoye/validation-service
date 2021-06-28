@@ -7,6 +7,8 @@ public class RangeValidator implements Validator
     @Override
     public boolean validate(String input, FieldValidation fieldValidation)
     {
-        return fieldValidation.getType().equalsIgnoreCase(("RANGE"));
+        String range = fieldValidation.getValidRange();
+
+        return false;
     }
 }

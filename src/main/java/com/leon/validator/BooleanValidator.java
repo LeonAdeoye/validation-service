@@ -7,7 +7,6 @@ public class BooleanValidator implements Validator
     @Override
     public boolean validate(String input, FieldValidation fieldValidation)
     {
-        return fieldValidation.getType().equalsIgnoreCase(("BOOLEAN")) &&
-                (input.equalsIgnoreCase("TRUE") || input.equalsIgnoreCase("FALSE"));
+        return input.equalsIgnoreCase("TRUE") || input.equalsIgnoreCase("FALSE");
     }
 }

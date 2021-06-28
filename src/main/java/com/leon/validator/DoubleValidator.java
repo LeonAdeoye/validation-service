@@ -7,6 +7,6 @@ public class DoubleValidator implements Validator
     @Override
     public boolean validate(String input, FieldValidation fieldValidation)
     {
-        return fieldValidation.getType().equalsIgnoreCase(("DOUBLE"));
+        return input.matches("/^[0-9]+(\\.[0-9]+)?$");
     }
 }

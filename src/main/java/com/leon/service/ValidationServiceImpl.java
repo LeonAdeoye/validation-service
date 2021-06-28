@@ -14,4 +14,9 @@ public class ValidationServiceImpl implements ValidationService
     {
         return new ValidationResult();
     }
+
+    private boolean validateRow(String[] row, ValidationConfiguration validationConfiguration)
+    {
+        return false;
+    }
 }

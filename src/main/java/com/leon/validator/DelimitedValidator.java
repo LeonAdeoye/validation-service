@@ -2,11 +2,11 @@ package com.leon.validator;
 
 import com.leon.model.FieldValidation;
 
-public class DelimitedValuesValidator implements Validator
+public class DelimitedValidator implements Validator
 {
     @Override
     public boolean validate(String input, FieldValidation fieldValidation)
     {
-        return fieldValidation.getType().equalsIgnoreCase(("DELIMITED_VALUES"));
+        return input.split(fieldValidation.getListDelimiter()).length > 0;
     }
 }

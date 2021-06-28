@@ -7,6 +7,6 @@ public class CurrencyValidator implements Validator
     @Override
     public boolean validate(String input, FieldValidation fieldValidation)
     {
-        return fieldValidation.getType().equalsIgnoreCase(("CURRENCY")) && input.matches("[A-Z]{3}$");
+        return input.matches("[A-Z]{3}$");
     }
 }

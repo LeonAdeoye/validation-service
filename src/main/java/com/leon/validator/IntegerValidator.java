@@ -7,6 +7,6 @@ public class IntegerValidator implements Validator
     @Override
     public boolean validate(String input, FieldValidation fieldValidation)
     {
-        return fieldValidation.getType().equalsIgnoreCase(("INTEGER"));
+        return input.matches("/^[+-]?[0-9]+$");
     }
 }
