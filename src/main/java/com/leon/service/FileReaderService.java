@@ -4,5 +4,5 @@ import reactor.core.publisher.Flux;
 
 public interface FileReaderService
 {
-    Flux<String[]> readFile(String filePath);
+    Flux<String[]> readFile(String filePath, char delimiter);
 }

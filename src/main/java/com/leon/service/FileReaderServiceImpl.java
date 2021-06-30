@@ -1,48 +1,65 @@
 package com.leon.service;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
+@Service
 public class FileReaderServiceImpl implements FileReaderService
 {
     private static final Logger logger = LoggerFactory.getLogger(FileReaderServiceImpl.class);
 
     @Override
-    public Flux<String[]> readFile(String filePath)
+    public Flux<String[]> readFile(String filePath, char delimiter)
     {
-        List<String[]> result = new ArrayList<>();
-        try(java.io.FileReader fileReader = new java.io.FileReader(filePath); CSVReader reader = new CSVReader(fileReader))
+        try
         {
-            String[] nextLine;
+            CSVParser parser = new CSVParserBuilder().withSeparator(delimiter).build();
+            CSVReader reader = new CSVReaderBuilder(new FileReader(filePath)).withCSVParser(parser).build();
 
-            while ((nextLine = reader.readNext()) != null)
+            return Flux.generate(() -> null, (state, sink) ->
             {
-                result.add(nextLine);
-            }
+                try
+                {
+                    String[] nextLine = reader.readNext();
+                    if(nextLine != null && nextLine.length > 0)
+                        sink.next(nextLine);
+                    else
+                        sink.complete();
+
+
+                }
+                catch(IOException ioe)
+                {
+                    logger.error(ioe.getMessage());
+                }
+                catch(CsvValidationException cve)
+                {
+                    logger.error(cve.getMessage());
+                }
+                finally
+                {
+                    return state;
+                }
+            });
         }
         catch(FileNotFoundException fnfe)
         {
             logger.error(fnfe.getMessage());
         }
-        catch(IOException ioe)
-        {
-            logger.error(ioe.getMessage());
-        }
-        catch(CsvValidationException cve)
-        {
-            logger.error(cve.getMessage());
-        }
         finally
         {
-            return Flux.fromIterable(result);
+            return Flux.empty();
         }
     }
 }
