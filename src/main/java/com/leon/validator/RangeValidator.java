@@ -5,10 +5,15 @@ import com.leon.model.FieldValidation;
 public class RangeValidator implements Validator
 {
     @Override
-    public boolean validate(String input, FieldValidation fieldValidation)
+    public String validate(String input, FieldValidation fieldValidation)
     {
-        String range = fieldValidation.getValidRange();
-
-        return false;
+        Double valueToCompare = Double.parseDouble(input);
+        String[] limits = fieldValidation.getValidRange().split(",");
+        double minimum = Double.parseDouble(limits[0]);
+        double maximum = Double.parseDouble(limits[1]);
+        if(valueToCompare >= minimum && valueToCompare <= maximum)
+            return "";
+        else
+            return String.format("The field value [%s] is not within the ranges: %s and %s.", input, limits[0], limits[1]);
     }
 }

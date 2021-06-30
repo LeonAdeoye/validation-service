@@ -5,8 +5,11 @@ import com.leon.model.FieldValidation;
 public class BooleanValidator implements Validator
 {
     @Override
-    public boolean validate(String input, FieldValidation fieldValidation)
+    public String validate(String input, FieldValidation fieldValidation)
     {
-        return input.equalsIgnoreCase("TRUE") || input.equalsIgnoreCase("FALSE");
+        if(input.equalsIgnoreCase("TRUE") || input.equalsIgnoreCase("FALSE"))
+            return "";
+        else
+            return String.format("The field value [%s] is not a valid boolean.", input);
     }
 }

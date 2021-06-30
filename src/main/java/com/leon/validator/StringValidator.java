@@ -10,20 +10,21 @@ public class StringValidator implements Validator
     private Pattern lowercasePattern = Pattern.compile("^[0-9a-z\\W]*$");
 
     @Override
-    public boolean validate(String input, FieldValidation fieldValidation)
+    public String validate(String input, FieldValidation fieldValidation)
     {
         String format = fieldValidation.getStringFormat();
         if(format == null || format.isEmpty())
-            return true;
+            return "";
 
         switch(format.toUpperCase())
         {
             case "UPPERCASE":
-                return uppercasePattern.matcher(input).matches();
+                if(uppercasePattern.matcher(input).matches())
+                    return "";
             case "LOWERCASE":
-                return lowercasePattern.matcher(input).matches();
-            default:
-                return false;
+                if(lowercasePattern.matcher(input).matches())
+                    return "";
         }
+        return String.format("The field value [%s] is not a valid string.", input);
     }
 }

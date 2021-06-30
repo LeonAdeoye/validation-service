@@ -5,8 +5,11 @@ import com.leon.model.FieldValidation;
 public class DelimitedValidator implements Validator
 {
     @Override
-    public boolean validate(String input, FieldValidation fieldValidation)
+    public String validate(String input, FieldValidation fieldValidation)
     {
-        return input.split(fieldValidation.getListDelimiter()).length > 0;
+        if(input.split(fieldValidation.getListDelimiter()).length > 0)
+            return "";
+        else
+            return String.format("the field value [%s] is not a valid delimited value.", input);
     }
 }

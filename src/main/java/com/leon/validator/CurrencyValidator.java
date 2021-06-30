@@ -5,8 +5,11 @@ import com.leon.model.FieldValidation;
 public class CurrencyValidator implements Validator
 {
     @Override
-    public boolean validate(String input, FieldValidation fieldValidation)
+    public String validate(String input, FieldValidation fieldValidation)
     {
-        return input.matches("[A-Z]{3}$");
+        if(input.matches("[A-Z]{3}$"))
+            return "";
+        else
+            return String.format("The field value [%s] is not a valid currency.", input);
     }
 }
