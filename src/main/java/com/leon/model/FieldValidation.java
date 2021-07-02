@@ -54,7 +54,7 @@ public class FieldValidation
         this.type = type;
     }
 
-    public String getDataFormat()
+    public String getDateFormat()
     {
         return dataFormat;
     }
