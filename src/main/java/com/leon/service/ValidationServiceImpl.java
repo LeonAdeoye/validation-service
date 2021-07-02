@@ -45,6 +45,9 @@ public class ValidationServiceImpl implements ValidationService
     @Autowired
     DelimitedValidator delimitedValidator;
 
+    @Autowired
+    EnumeratedTypeValidator enumeratedTypeValidator;
+
     @Override
     public ValidationResult validate(String filePath, ValidationConfiguration validationConfiguration)
     {
@@ -85,24 +88,43 @@ public class ValidationServiceImpl implements ValidationService
             String errorRowDetails = addErrorRowDetails(rowIndex, columnIndex);
             String fieldValue = row[columnIndex];
 
-            switch(listOfValidations.get(columnIndex).getType())
+            if(fieldValue.isEmpty() && fieldValidation.cannotBeEmpty())
+            {
+                result.addError(errorRowDetails + "The field value is empty.");
+                continue;
+            }
+
+            switch(listOfValidations.get(columnIndex).getType().toUpperCase())
             {
                 case "INTEGER":
                     result.addError(errorRowDetails + integerValidator.validate(fieldValue, fieldValidation));
+                    break;
                 case "DOUBLE":
                     result.addError(errorRowDetails + doubleValidator.validate(fieldValue, fieldValidation));
+                    break;
                 case "STRING":
                     result.addError(errorRowDetails + stringValidator.validate(fieldValue, fieldValidation));
+                    break;
                 case "CURRENCY":
                     result.addError(errorRowDetails + currencyValidator.validate(fieldValue, fieldValidation));
+                    break;
                 case "BOOLEAN":
                     result.addError(errorRowDetails + booleanValidator.validate(fieldValue, fieldValidation));
+                    break;
                 case "REGEX":
                     result.addError(errorRowDetails + regexValidator.validate(fieldValue, fieldValidation));
+                    break;
                 case "DELIMITED":
-                    result.addError(errorRowDetails+ delimitedValidator.validate(fieldValue, fieldValidation));
+                    result.addError(errorRowDetails + delimitedValidator.validate(fieldValue, fieldValidation));
+                    break;
                 case "RANGE":
-                    result.addError(errorRowDetails+ rangeValidator.validate(fieldValue, fieldValidation));
+                    result.addError(errorRowDetails + rangeValidator.validate(fieldValue, fieldValidation));
+                    break;
+                case "ENUMERATED":
+                    result.addError(errorRowDetails + enumeratedTypeValidator.validate(fieldValue, fieldValidation));
+                    break;
+                default:
+                    result.addError(errorRowDetails + String.format("field validation type %s is unsupported.", listOfValidations.get(columnIndex).getType()));
             }
         }
         return result;

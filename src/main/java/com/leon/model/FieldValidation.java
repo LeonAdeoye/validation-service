@@ -64,9 +64,14 @@ public class FieldValidation
         this.dataFormat = dataFormat;
     }
 
-    public boolean isCanBeEmpty()
+    public boolean canBeEmpty()
     {
         return canBeEmpty;
+    }
+
+    public boolean cannotBeEmpty()
+    {
+        return !canBeEmpty;
     }
 
     public void setCanBeEmpty(boolean canBeEmpty)
