@@ -14,6 +14,6 @@ public class RegexValidator implements Validator
         if(regexPattern.matcher(input).matches())
             return "";
         else
-            return String.format("The field value [%s] does not match the regex expression: %s", input, fieldValidation.getValidRegex());
+            return String.format("The field value [%s] does not match the regex expression: %s.", input, fieldValidation.getValidRegex());
     }
 }

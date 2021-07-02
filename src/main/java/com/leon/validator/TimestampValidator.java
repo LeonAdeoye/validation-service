@@ -12,7 +12,7 @@ public class TimestampValidator implements Validator
         if(validateTimestamp(input, fieldValidation.getDateFormat()))
             return "";
         else
-            return String.format("The field value [%s] does not match date timestamp value format", input);
+            return String.format("The field value [%s] does not match date timestamp value format.", input);
     }
 
     private boolean validateTimestamp(String input, String format)

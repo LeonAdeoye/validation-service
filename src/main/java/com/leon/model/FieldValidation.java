@@ -7,7 +7,7 @@ public class FieldValidation
     private String type;
     private String dataFormat;
     private boolean canBeEmpty;
-    private String[] validValues;
+    private String[] enumeratedTypeValues;
     private String validRegex;
     private String stringFormat;
     private int maxDecimals;
@@ -79,14 +79,14 @@ public class FieldValidation
         this.canBeEmpty = canBeEmpty;
     }
 
-    public String[] getValidValues()
+    public String[] getEnumeratedTypeValues()
     {
-        return validValues;
+        return enumeratedTypeValues;
     }
 
-    public void setValidValues(String[] validValues)
+    public void setEnumeratedTypeValues(String[] enumeratedTypeValues)
     {
-        this.validValues = validValues;
+        this.enumeratedTypeValues = enumeratedTypeValues;
     }
 
     public String getValidRegex()
