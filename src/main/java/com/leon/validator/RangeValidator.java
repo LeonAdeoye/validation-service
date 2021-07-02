@@ -1,7 +1,9 @@
 package com.leon.validator;
 
 import com.leon.model.FieldValidation;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RangeValidator implements Validator
 {
     @Override

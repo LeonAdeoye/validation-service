@@ -1,9 +1,12 @@
 package com.leon.validator;
 
 import com.leon.model.FieldValidation;
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Component
 public class TimestampValidator implements Validator
 {
     @Override

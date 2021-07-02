@@ -1,9 +1,10 @@
 package com.leon.validator;
 
 import com.leon.model.FieldValidation;
-
+import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
+@Component
 public class EnumeratedTypeValidator implements Validator
 {
     @Override

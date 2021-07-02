@@ -1,9 +1,10 @@
 package com.leon.validator;
 
 import com.leon.model.FieldValidation;
-
+import org.springframework.stereotype.Component;
 import java.util.regex.Pattern;
 
+@Component
 public class StringValidator implements Validator
 {
     private Pattern uppercasePattern = Pattern.compile("^[0-9A-Z\\W]*$");
