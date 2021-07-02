@@ -53,13 +53,13 @@ public class ValidationServiceImpl implements ValidationService
     {
         ValidationResult result = new ValidationResult();
         Flux<String[]> rows = fileReaderService.readFile(filePath, validationConfiguration.getDelimiter());
-        AtomicInteger count = new AtomicInteger(0);
+        AtomicInteger rowIndex = new AtomicInteger(0);
 
         rows.parallel()
             .runOn(Schedulers.parallel())
             .doOnNext(row  ->
             {
-                result.concatenateErrors(validateRow(count.getAndIncrement(), row, validationConfiguration).getErrors());
+                result.concatenateErrors(validateRow(rowIndex.getAndIncrement(), row, validationConfiguration).getErrors());
             })
             .subscribe();
 
@@ -96,31 +96,31 @@ public class ValidationServiceImpl implements ValidationService
 
             switch(listOfValidations.get(columnIndex).getType().toUpperCase())
             {
-                case "INTEGER":
+                case Validator.INTEGER:
                     result.addError(errorRowDetails + integerValidator.validate(fieldValue, fieldValidation));
                     break;
-                case "DOUBLE":
+                case Validator.DOUBLE:
                     result.addError(errorRowDetails + doubleValidator.validate(fieldValue, fieldValidation));
                     break;
-                case "STRING":
+                case Validator.STRING:
                     result.addError(errorRowDetails + stringValidator.validate(fieldValue, fieldValidation));
                     break;
-                case "CURRENCY":
+                case Validator.CURRENCY:
                     result.addError(errorRowDetails + currencyValidator.validate(fieldValue, fieldValidation));
                     break;
-                case "BOOLEAN":
+                case Validator.BOOLEAN:
                     result.addError(errorRowDetails + booleanValidator.validate(fieldValue, fieldValidation));
                     break;
-                case "REGEX":
+                case Validator.REGEX:
                     result.addError(errorRowDetails + regexValidator.validate(fieldValue, fieldValidation));
                     break;
-                case "DELIMITED":
+                case Validator.DELIMITED:
                     result.addError(errorRowDetails + delimitedValidator.validate(fieldValue, fieldValidation));
                     break;
-                case "RANGE":
+                case Validator.RANGE:
                     result.addError(errorRowDetails + rangeValidator.validate(fieldValue, fieldValidation));
                     break;
-                case "ENUMERATED":
+                case Validator.ENUMERATED:
                     result.addError(errorRowDetails + enumeratedTypeValidator.validate(fieldValue, fieldValidation));
                     break;
                 default:

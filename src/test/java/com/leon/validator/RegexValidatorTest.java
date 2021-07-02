@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -25,8 +26,8 @@ public class RegexValidatorTest
         // Arrange
         String input = "";
         // Act
-        Boolean result = regexValidator.validate(input, new FieldValidation());
+        String result = regexValidator.validate(input, new FieldValidation());
         // Assert
-        assertTrue(result);
+        assertEquals(result, "");
     }
 }
