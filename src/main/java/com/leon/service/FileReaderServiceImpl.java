@@ -36,8 +36,6 @@ public class FileReaderServiceImpl implements FileReaderService
                         sink.next(nextLine);
                     else
                         sink.complete();
-
-
                 }
                 catch(IOException ioe)
                 {

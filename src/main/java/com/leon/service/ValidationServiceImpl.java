@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class ValidationServiceImpl implements ValidationService
@@ -49,40 +50,59 @@ public class ValidationServiceImpl implements ValidationService
     {
         ValidationResult result = new ValidationResult();
         Flux<String[]> rows = fileReaderService.readFile(filePath, validationConfiguration.getDelimiter());
+        AtomicInteger count = new AtomicInteger(0);
 
         rows.parallel()
             .runOn(Schedulers.parallel())
-            .doOnNext(row  -> result.concatenateErrors(validateRow(row, validationConfiguration).getErrors()))
+            .doOnNext(row  ->
+            {
+                result.concatenateErrors(validateRow(count.getAndIncrement(), row, validationConfiguration).getErrors());
+            })
             .subscribe();
 
         return new ValidationResult();
     }
 
-    private ValidationResult validateRow(String[] row, ValidationConfiguration validationConfiguration)
+    private String addErrorRowDetails(int row, int column)
+    {
+        return String.format("Validation error found at row %d and column %d. ", row, column);
+    }
+
+    private ValidationResult validateRow(int rowIndex, String[] row, ValidationConfiguration validationConfiguration)
     {
         ValidationResult result = new ValidationResult();
         List<FieldValidation> listOfValidations = validationConfiguration.getListOfFieldValidations();
 
+        if(row.length != listOfValidations.size())
+        {
+            result.addError(String.format("Row length of %d is not equal to validation list size of %d", row.length, listOfValidations.size()));
+            return result;
+        }
+
         for(int columnIndex = 0; columnIndex < row.length; ++columnIndex)
         {
+            FieldValidation fieldValidation = listOfValidations.get(columnIndex);
+            String errorRowDetails = addErrorRowDetails(rowIndex, columnIndex);
+            String fieldValue = row[columnIndex];
+
             switch(listOfValidations.get(columnIndex).getType())
             {
                 case "INTEGER":
-                    result.addError(integerValidator.validate(row[columnIndex], listOfValidations.get(columnIndex)));
+                    result.addError(errorRowDetails + integerValidator.validate(fieldValue, fieldValidation));
                 case "DOUBLE":
-                    result.addError(doubleValidator.validate(row[columnIndex], listOfValidations.get(columnIndex)));
+                    result.addError(errorRowDetails + doubleValidator.validate(fieldValue, fieldValidation));
                 case "STRING":
-                    result.addError(stringValidator.validate(row[columnIndex], listOfValidations.get(columnIndex)));
+                    result.addError(errorRowDetails + stringValidator.validate(fieldValue, fieldValidation));
                 case "CURRENCY":
-                    result.addError(currencyValidator.validate(row[columnIndex], listOfValidations.get(columnIndex)));
+                    result.addError(errorRowDetails + currencyValidator.validate(fieldValue, fieldValidation));
                 case "BOOLEAN":
-                    result.addError(booleanValidator.validate(row[columnIndex], listOfValidations.get(columnIndex)));
+                    result.addError(errorRowDetails + booleanValidator.validate(fieldValue, fieldValidation));
                 case "REGEX":
-                    result.addError(regexValidator.validate(row[columnIndex], listOfValidations.get(columnIndex)));
+                    result.addError(errorRowDetails + regexValidator.validate(fieldValue, fieldValidation));
                 case "DELIMITED":
-                    result.addError(delimitedValidator.validate(row[columnIndex], listOfValidations.get(columnIndex)));
+                    result.addError(errorRowDetails+ delimitedValidator.validate(fieldValue, fieldValidation));
                 case "RANGE":
-                    result.addError(rangeValidator.validate(row[columnIndex], listOfValidations.get(columnIndex)));
+                    result.addError(errorRowDetails+ rangeValidator.validate(fieldValue, fieldValidation));
             }
         }
         return result;
