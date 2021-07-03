@@ -26,7 +26,7 @@ public class CurrencyValidatorTest
         FieldValidation fieldValidation = new FieldValidation();
         fieldValidation.setType(Validator.CURRENCY);
         // Act
-        String actualResult = currencyValidator.validate(input, new FieldValidation());
+        String actualResult = currencyValidator.validate(input, fieldValidation);
         // Assert
         assertEquals("when passed valid currency value, validate should return an empty string",  "", actualResult);
     }
@@ -39,7 +39,7 @@ public class CurrencyValidatorTest
         FieldValidation fieldValidation = new FieldValidation();
         fieldValidation.setType(Validator.BOOLEAN);
         // Act
-        String actualResult = currencyValidator.validate(input, new FieldValidation());
+        String actualResult = currencyValidator.validate(input, fieldValidation);
         // Assert
         assertEquals("when passed invalid lowercase boolean value, validate should return an error string","The field value [jpy] is not a valid currency.", actualResult);
     }
@@ -52,7 +52,7 @@ public class CurrencyValidatorTest
         FieldValidation fieldValidation = new FieldValidation();
         fieldValidation.setType(Validator.BOOLEAN);
         // Act
-        String actualResult = currencyValidator.validate(input, new FieldValidation());
+        String actualResult = currencyValidator.validate(input, fieldValidation);
         // Assert
         assertEquals("when passed invalid mixed case currency value, validate should return an error string", "The field value [UsD] is not a valid currency.", actualResult);
     }
@@ -65,7 +65,7 @@ public class CurrencyValidatorTest
         FieldValidation fieldValidation = new FieldValidation();
         fieldValidation.setType(Validator.BOOLEAN);
         // Act
-        String actualResult = currencyValidator.validate(input, new FieldValidation());
+        String actualResult = currencyValidator.validate(input, fieldValidation);
         // Assert
         assertEquals("when passed invalid four character currency value, validate should return an error string", "The field value [GBPS] is not a valid currency.", actualResult);
     }

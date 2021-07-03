@@ -27,7 +27,7 @@ public class BooleanValidatorTest
         FieldValidation fieldValidation = new FieldValidation();
         fieldValidation.setType(Validator.BOOLEAN);
         // Act
-        String actualResult = booleanValidator.validate(input, new FieldValidation());
+        String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
         assertEquals("when passed valid lowercase boolean value, validate should return an empty string",  "", actualResult);
     }
@@ -40,7 +40,7 @@ public class BooleanValidatorTest
         FieldValidation fieldValidation = new FieldValidation();
         fieldValidation.setType(Validator.BOOLEAN);
         // Act
-        String actualResult = booleanValidator.validate(input, new FieldValidation());
+        String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
         assertEquals("when passed valid uppercase boolean value, validate should return an empty string","", actualResult);
     }
@@ -53,7 +53,7 @@ public class BooleanValidatorTest
         FieldValidation fieldValidation = new FieldValidation();
         fieldValidation.setType(Validator.BOOLEAN);
         // Act
-        String actualResult = booleanValidator.validate(input, new FieldValidation());
+        String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
         assertEquals("when passed valid mixed case boolean value, validate should return an empty string", "", actualResult);
     }
@@ -66,7 +66,7 @@ public class BooleanValidatorTest
         FieldValidation fieldValidation = new FieldValidation();
         fieldValidation.setType(Validator.BOOLEAN);
         // Act
-        String actualResult = booleanValidator.validate(input, new FieldValidation());
+        String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
         assertEquals("when passed valid lowercase boolean value, validate should return an empty string", "", actualResult);
     }
@@ -79,7 +79,7 @@ public class BooleanValidatorTest
         FieldValidation fieldValidation = new FieldValidation();
         fieldValidation.setType(Validator.BOOLEAN);
         // Act
-        String actualResult = booleanValidator.validate(input, new FieldValidation());
+        String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
         assertEquals("when passed valid uppercase booleanb value, validate should return an empty string", "", actualResult);
     }
@@ -92,7 +92,7 @@ public class BooleanValidatorTest
         FieldValidation fieldValidation = new FieldValidation();
         fieldValidation.setType(Validator.BOOLEAN);
         // Act
-        String actualResult = booleanValidator.validate(input, new FieldValidation());
+        String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
         assertEquals("when passed valid mixed case boolean value, validate should return an empty string", "", actualResult);
     }
@@ -105,7 +105,7 @@ public class BooleanValidatorTest
         FieldValidation fieldValidation = new FieldValidation();
         fieldValidation.setType(Validator.BOOLEAN);
         // Act
-        String actualResult = booleanValidator.validate(input, new FieldValidation());
+        String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
         assertEquals("when passed invalid boolean value, validate should return an error string", "The field value [TRUTHY] is not a valid boolean.", actualResult);
     }
