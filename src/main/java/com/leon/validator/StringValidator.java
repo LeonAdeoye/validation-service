@@ -22,9 +22,13 @@ public class StringValidator implements Validator
             case "UPPERCASE":
                 if(uppercasePattern.matcher(input).matches())
                     return "";
+                else
+                    return String.format("The field value [%s] is not a valid uppercase string.", input);
             case "LOWERCASE":
                 if(lowercasePattern.matcher(input).matches())
                     return "";
+                else
+                    return String.format("The field value [%s] is not a valid lowercase string.", input);
         }
         return String.format("The field value [%s] is not a valid string.", input);
     }

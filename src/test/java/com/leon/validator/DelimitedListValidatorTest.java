@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 @AutoConfigureMockMvc
 public class DelimitedListValidatorTest
 {
-
     @Autowired
     private DelimitedListValidator delimitedListValidator;
 
