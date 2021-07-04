@@ -43,7 +43,7 @@ public class ValidationServiceImpl implements ValidationService
     RangeValidator rangeValidator;
 
     @Autowired
-    DelimitedValidator delimitedValidator;
+    DelimitedListValidator delimitedListValidator;
 
     @Autowired
     EnumeratedTypeValidator enumeratedTypeValidator;
@@ -115,7 +115,7 @@ public class ValidationServiceImpl implements ValidationService
                     result.addError(errorRowDetails + regexValidator.validate(fieldValue, fieldValidation));
                     break;
                 case Validator.DELIMITED:
-                    result.addError(errorRowDetails + delimitedValidator.validate(fieldValue, fieldValidation));
+                    result.addError(errorRowDetails + delimitedListValidator.validate(fieldValue, fieldValidation));
                     break;
                 case Validator.RANGE:
                     result.addError(errorRowDetails + rangeValidator.validate(fieldValue, fieldValidation));

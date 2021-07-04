@@ -11,7 +11,8 @@ public class FieldValidation
     private String validRegex;
     private String stringFormat;
     private int maxDecimals;
-    private String listDelimiter;
+    private String listDelimiterRegex;
+    private int minimumDelimitedValues;
     private String validRange;
 
     public String getValidRange()
@@ -22,6 +23,16 @@ public class FieldValidation
     public void setValidRange(String validRange)
     {
         this.validRange = validRange;
+    }
+
+    public int getMinimumDelimitedValues()
+    {
+        return minimumDelimitedValues;
+    }
+
+    public void setMinimumDelimitedValues(int minimumDelimitedValues)
+    {
+        this.minimumDelimitedValues = minimumDelimitedValues;
     }
 
     public int getId()
@@ -119,13 +130,13 @@ public class FieldValidation
         this.maxDecimals = maxDecimals;
     }
 
-    public String getListDelimiter()
+    public String getListDelimiterRegex()
     {
-        return listDelimiter;
+        return listDelimiterRegex;
     }
 
-    public void setListDelimiter(String listDelimiter)
+    public void setListDelimiterRegex(String listDelimiterRegex)
     {
-        this.listDelimiter = listDelimiter;
+        this.listDelimiterRegex = listDelimiterRegex;
     }
 }
