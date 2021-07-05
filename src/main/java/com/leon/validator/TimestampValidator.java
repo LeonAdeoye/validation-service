@@ -12,7 +12,7 @@ public class TimestampValidator implements Validator
     @Override
     public String validate(String input, FieldValidation fieldValidation)
     {
-        if(validateTimestamp(input, fieldValidation.getDateFormat()))
+        if(validateTimestamp(input, fieldValidation.getTimestampFormat()))
             return "";
         else
             return String.format("The field value [%s] does not match date timestamp value format.", input);

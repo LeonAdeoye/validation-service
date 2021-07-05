@@ -37,6 +37,9 @@ public class ValidationServiceImpl implements ValidationService
     BooleanValidator booleanValidator;
 
     @Autowired
+    TimestampValidator timestampValidator;
+
+    @Autowired
     RegexValidator regexValidator;
 
     @Autowired
@@ -116,6 +119,9 @@ public class ValidationServiceImpl implements ValidationService
                     break;
                 case Validator.DELIMITED:
                     result.addError(errorRowDetails + delimitedListValidator.validate(fieldValue, fieldValidation));
+                    break;
+                case Validator.TIMESTAMP:
+                    result.addError(errorRowDetails + timestampValidator.validate(fieldValue, fieldValidation));
                     break;
                 case Validator.RANGE:
                     result.addError(errorRowDetails + rangeValidator.validate(fieldValue, fieldValidation));

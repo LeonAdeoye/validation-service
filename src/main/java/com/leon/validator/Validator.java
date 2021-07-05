@@ -13,6 +13,7 @@ public interface Validator
     String ENUMERATED = "ENUMERATED";
     String RANGE = "RANGE";
     String REGEX = "REGEX";
+    String TIMESTAMP = "TIMESTAMP";
 
     String validate(String input, FieldValidation fieldValidation);
 }

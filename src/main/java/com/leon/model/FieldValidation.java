@@ -5,7 +5,7 @@ public class FieldValidation
     private int id;
     private String description;
     private String type;
-    private String dataFormat;
+    private String timestampFormat;
     private boolean canBeEmpty;
     private String[] enumeratedTypeValues;
     private String validRegex;
@@ -65,14 +65,14 @@ public class FieldValidation
         this.type = type;
     }
 
-    public String getDateFormat()
+    public String getTimestampFormat()
     {
-        return dataFormat;
+        return timestampFormat;
     }
 
-    public void setDataFormat(String dataFormat)
+    public void setTimestampFormat(String timestampFormat)
     {
-        this.dataFormat = dataFormat;
+        this.timestampFormat = timestampFormat;
     }
 
     public boolean canBeEmpty()
