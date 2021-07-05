@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class ValidationServiceImpl implements ValidationService
@@ -57,17 +56,16 @@ public class ValidationServiceImpl implements ValidationService
     {
         ValidationResult result = new ValidationResult();
         Flux<DataRow> rows = fileReaderService.readFile(filePath, validationConfiguration.getDelimiter());
-        AtomicInteger rowIndex = new AtomicInteger(0);
 
         rows.parallel()
             .runOn(Schedulers.parallel())
             .doOnNext(dataRow  ->
             {
-                result.concatenateErrors(validateRow(dataRow.getRowNumber(), dataRow.getRowValues(), validationConfiguration).getErrors());
+                result.concatenateErrors(validateRow(dataRow, validationConfiguration).getErrors());
             })
             .subscribe();
 
-        return new ValidationResult();
+        return result;
     }
 
     private String addErrorRowDetails(int row, int column)
@@ -75,22 +73,22 @@ public class ValidationServiceImpl implements ValidationService
         return String.format("Validation error found at row %d and column %d. ", row, column);
     }
 
-    private ValidationResult validateRow(int rowIndex, String[] row, ValidationConfiguration validationConfiguration)
+    private ValidationResult validateRow(DataRow dataRow, ValidationConfiguration validationConfiguration)
     {
         ValidationResult result = new ValidationResult();
         List<FieldValidation> listOfValidations = validationConfiguration.getListOfFieldValidations();
 
-        if(row.length != listOfValidations.size())
+        if(dataRow.getRowValues().length != listOfValidations.size())
         {
-            result.addError(String.format("Row length of %d is not equal to validation list size of %d", row.length, listOfValidations.size()));
+            result.addError(String.format("Row length of %d is not equal to validation list size of %d", dataRow.getRowValues().length, listOfValidations.size()));
             return result;
         }
 
-        for(int columnIndex = 0; columnIndex < row.length; ++columnIndex)
+        for(int columnIndex = 0; columnIndex < dataRow.getRowValues().length; ++columnIndex)
         {
             FieldValidation fieldValidation = listOfValidations.get(columnIndex);
-            String errorRowDetails = addErrorRowDetails(rowIndex, columnIndex);
-            String fieldValue = row[columnIndex];
+            String errorRowDetails = addErrorRowDetails(dataRow.getRowNumber(), columnIndex);
+            String fieldValue = dataRow.getRowValues()[columnIndex];
 
             if(fieldValue.isEmpty() && fieldValidation.cannotBeEmpty())
             {
