@@ -1,8 +1,9 @@
 package com.leon.service;
 
+import com.leon.model.DataRow;
 import reactor.core.publisher.Flux;
 
 public interface FileReaderService
 {
-    Flux<String[]> readFile(String filePath, char delimiter);
+    Flux<DataRow> readFile(String filePath, char delimiter);
 }

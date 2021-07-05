@@ -1,18 +1,35 @@
 package com.leon.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Arrays;
+import java.util.Objects;
+
 public class FieldValidation
 {
+    @JsonProperty("id")
     private int id;
+    @JsonProperty("description")
     private String description;
+    @JsonProperty("type")
     private String type;
+    @JsonProperty("timestampFormat")
     private String timestampFormat;
-    private boolean canBeEmpty;
+    @JsonProperty("canBeEmpty")
+    private boolean canBeEmpty = true;
+    @JsonProperty("enumeratedTypeValues")
     private String[] enumeratedTypeValues;
+    @JsonProperty("validRegex")
     private String validRegex;
+    @JsonProperty("stringFormat")
     private String stringFormat;
+    @JsonProperty("maxDecimals")
     private int maxDecimals;
+    @JsonProperty("listDelimiterRegex")
     private String listDelimiterRegex;
+    @JsonProperty("minimumDelimitedValues")
     private int minimumDelimitedValues;
+    @JsonProperty("validRange")
     private String validRange;
 
     public String getValidRange()
@@ -138,5 +155,33 @@ public class FieldValidation
     public void setListDelimiterRegex(String listDelimiterRegex)
     {
         this.listDelimiterRegex = listDelimiterRegex;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+        FieldValidation that = (FieldValidation) o;
+        return getId() == that.getId() &&
+                canBeEmpty == that.canBeEmpty &&
+                getMaxDecimals() == that.getMaxDecimals() &&
+                getMinimumDelimitedValues() == that.getMinimumDelimitedValues() &&
+                Objects.equals(getDescription(), that.getDescription()) &&
+                Objects.equals(getType(), that.getType()) &&
+                Objects.equals(getTimestampFormat(), that.getTimestampFormat()) &&
+                Arrays.equals(getEnumeratedTypeValues(), that.getEnumeratedTypeValues()) &&
+                Objects.equals(getValidRegex(), that.getValidRegex()) &&
+                Objects.equals(getStringFormat(), that.getStringFormat()) &&
+                Objects.equals(getListDelimiterRegex(), that.getListDelimiterRegex()) &&
+                Objects.equals(getValidRange(), that.getValidRange());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = Objects.hash(getId(), getDescription(), getType(), getTimestampFormat(), canBeEmpty, getValidRegex(), getStringFormat(), getMaxDecimals(), getListDelimiterRegex(), getMinimumDelimitedValues(), getValidRange());
+        result = 31 * result + Arrays.hashCode(getEnumeratedTypeValues());
+        return result;
     }
 }

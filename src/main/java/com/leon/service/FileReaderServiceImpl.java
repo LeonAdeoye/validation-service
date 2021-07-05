@@ -1,5 +1,6 @@
 package com.leon.service;
 
+import com.leon.model.DataRow;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
@@ -13,14 +14,16 @@ import reactor.core.publisher.Flux;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class FileReaderServiceImpl implements FileReaderService
 {
     private static final Logger logger = LoggerFactory.getLogger(FileReaderServiceImpl.class);
+    private AtomicInteger rowIndex = new AtomicInteger(0);
 
     @Override
-    public Flux<String[]> readFile(String filePath, char delimiter)
+    public Flux<DataRow> readFile(String filePath, char delimiter)
     {
         try
         {
@@ -33,7 +36,7 @@ public class FileReaderServiceImpl implements FileReaderService
                 {
                     String[] nextLine = reader.readNext();
                     if(nextLine != null && nextLine.length > 0)
-                        sink.next(nextLine);
+                        sink.next(new DataRow(rowIndex.getAndIncrement(), nextLine));
                     else
                         sink.complete();
                 }

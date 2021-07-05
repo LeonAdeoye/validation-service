@@ -1,5 +1,6 @@
 package com.leon.service;
 
+import com.leon.model.DataRow;
 import com.leon.model.FieldValidation;
 import com.leon.model.ValidationConfiguration;
 import com.leon.model.ValidationResult;
@@ -55,14 +56,14 @@ public class ValidationServiceImpl implements ValidationService
     public ValidationResult validate(String filePath, ValidationConfiguration validationConfiguration)
     {
         ValidationResult result = new ValidationResult();
-        Flux<String[]> rows = fileReaderService.readFile(filePath, validationConfiguration.getDelimiter());
+        Flux<DataRow> rows = fileReaderService.readFile(filePath, validationConfiguration.getDelimiter());
         AtomicInteger rowIndex = new AtomicInteger(0);
 
         rows.parallel()
             .runOn(Schedulers.parallel())
-            .doOnNext(row  ->
+            .doOnNext(dataRow  ->
             {
-                result.concatenateErrors(validateRow(rowIndex.getAndIncrement(), row, validationConfiguration).getErrors());
+                result.concatenateErrors(validateRow(dataRow.getRowNumber(), dataRow.getRowValues(), validationConfiguration).getErrors());
             })
             .subscribe();
 

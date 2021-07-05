@@ -1,11 +1,18 @@
 package com.leon.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
+@JsonIgnoreProperties
 public class ValidationConfiguration
 {
-    private char delimiter;
-    private int rowStart;
+    @JsonProperty("delimiter")
+    private char delimiter = ',';
+    @JsonProperty("rowStart")
+    private int rowStart = 0;
+    @JsonProperty("listOfFieldValidations")
     private List<FieldValidation> listOfFieldValidations;
 
     public ValidationConfiguration() {}
