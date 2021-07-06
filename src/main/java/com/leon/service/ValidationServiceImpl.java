@@ -60,12 +60,7 @@ public class ValidationServiceImpl implements ValidationService
             Flux<DataRow> rows = fileReaderService.readFile(filePath, validationConfiguration.getDelimiter());
             rows.parallel()
                 .runOn(Schedulers.parallel())
-                .doOnNext(dataRow ->
-                {
-                    List<String> errors = validateRow(dataRow, validationConfiguration).getErrors();
-                    if(errors.size() > 0)
-                        result.concatenateErrors(errors);
-                })
+                .doOnNext(dataRow -> result.concatenateErrors(validateRow(dataRow, validationConfiguration).getErrors()))
                 .subscribe();
         }
         catch(Exception e)
@@ -145,7 +140,11 @@ public class ValidationServiceImpl implements ValidationService
             }
 
             if(!validationResult.isEmpty())
-                result.addError(errorRowDetails + validationResult);
+            {
+                String error = errorRowDetails + validationResult;
+                logger.error(error);
+                result.addError(error);
+            }
         }
         return result;
     }
