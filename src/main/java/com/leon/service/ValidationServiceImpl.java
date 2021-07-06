@@ -61,7 +61,8 @@ public class ValidationServiceImpl implements ValidationService
             rows.parallel()
                 .runOn(Schedulers.parallel())
                 .doOnNext(dataRow -> result.concatenateErrors(validateRow(dataRow, validationConfiguration).getErrors()))
-                .subscribe();
+                .sequential()
+                .blockLast();
         }
         catch(Exception e)
         {
@@ -69,6 +70,7 @@ public class ValidationServiceImpl implements ValidationService
         }
         finally
         {
+            System.out.println("Size: " + result.getErrors().size());
             return result;
         }
     }
