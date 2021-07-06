@@ -55,17 +55,27 @@ public class ValidationServiceImpl implements ValidationService
     public ValidationResult validate(String filePath, ValidationConfiguration validationConfiguration)
     {
         ValidationResult result = new ValidationResult();
-        Flux<DataRow> rows = fileReaderService.readFile(filePath, validationConfiguration.getDelimiter());
-
-        rows.parallel()
-            .runOn(Schedulers.parallel())
-            .doOnNext(dataRow  ->
-            {
-                result.concatenateErrors(validateRow(dataRow, validationConfiguration).getErrors());
-            })
-            .subscribe();
-
-        return result;
+        try
+        {
+            Flux<DataRow> rows = fileReaderService.readFile(filePath, validationConfiguration.getDelimiter());
+            rows.parallel()
+                .runOn(Schedulers.parallel())
+                .doOnNext(dataRow ->
+                {
+                    List<String> errors = validateRow(dataRow, validationConfiguration).getErrors();
+                    if(errors.size() > 0)
+                        result.concatenateErrors(errors);
+                })
+                .subscribe();
+        }
+        catch(Exception e)
+        {
+            logger.error(e.getMessage());
+        }
+        finally
+        {
+            return result;
+        }
     }
 
     private String addErrorRowDetails(int row, int column)
@@ -84,7 +94,7 @@ public class ValidationServiceImpl implements ValidationService
             return result;
         }
 
-        for(int columnIndex = 0; columnIndex < dataRow.getRowValues().length; ++columnIndex)
+        for(int columnIndex = 0; columnIndex < listOfValidations.size(); ++columnIndex)
         {
             FieldValidation fieldValidation = listOfValidations.get(columnIndex);
             String errorRowDetails = addErrorRowDetails(dataRow.getRowNumber(), columnIndex);
@@ -96,41 +106,46 @@ public class ValidationServiceImpl implements ValidationService
                 continue;
             }
 
+            String validationResult;
+
             switch(listOfValidations.get(columnIndex).getType().toUpperCase())
             {
                 case Validator.INTEGER:
-                    result.addError(errorRowDetails + integerValidator.validate(fieldValue, fieldValidation));
+                    validationResult = integerValidator.validate(fieldValue, fieldValidation);
                     break;
                 case Validator.DOUBLE:
-                    result.addError(errorRowDetails + doubleValidator.validate(fieldValue, fieldValidation));
+                    validationResult = doubleValidator.validate(fieldValue, fieldValidation);
                     break;
                 case Validator.STRING:
-                    result.addError(errorRowDetails + stringValidator.validate(fieldValue, fieldValidation));
+                    validationResult = stringValidator.validate(fieldValue, fieldValidation);
                     break;
                 case Validator.CURRENCY:
-                    result.addError(errorRowDetails + currencyValidator.validate(fieldValue, fieldValidation));
+                    validationResult = currencyValidator.validate(fieldValue, fieldValidation);
                     break;
                 case Validator.BOOLEAN:
-                    result.addError(errorRowDetails + booleanValidator.validate(fieldValue, fieldValidation));
+                    validationResult =  booleanValidator.validate(fieldValue, fieldValidation);
                     break;
                 case Validator.REGEX:
-                    result.addError(errorRowDetails + regexValidator.validate(fieldValue, fieldValidation));
+                    validationResult = regexValidator.validate(fieldValue, fieldValidation);
                     break;
                 case Validator.DELIMITED:
-                    result.addError(errorRowDetails + delimitedListValidator.validate(fieldValue, fieldValidation));
+                    validationResult = delimitedListValidator.validate(fieldValue, fieldValidation);
                     break;
                 case Validator.TIMESTAMP:
-                    result.addError(errorRowDetails + timestampValidator.validate(fieldValue, fieldValidation));
+                    validationResult = timestampValidator.validate(fieldValue, fieldValidation);
                     break;
                 case Validator.RANGE:
-                    result.addError(errorRowDetails + rangeValidator.validate(fieldValue, fieldValidation));
+                    validationResult = rangeValidator.validate(fieldValue, fieldValidation);
                     break;
                 case Validator.ENUMERATED:
-                    result.addError(errorRowDetails + enumeratedTypeValidator.validate(fieldValue, fieldValidation));
+                    validationResult = enumeratedTypeValidator.validate(fieldValue, fieldValidation);
                     break;
                 default:
-                    result.addError(errorRowDetails + String.format("field validation type %s is unsupported.", listOfValidations.get(columnIndex).getType()));
+                    validationResult = String.format("field validation type %s is unsupported.", listOfValidations.get(columnIndex).getType());
             }
+
+            if(!validationResult.isEmpty())
+                result.addError(errorRowDetails + validationResult);
         }
         return result;
     }

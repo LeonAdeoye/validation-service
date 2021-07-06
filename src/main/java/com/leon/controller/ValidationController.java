@@ -44,6 +44,7 @@ public class ValidationController
             throw new IllegalArgumentException("Validation request's validation configuration cannot be null.");
         }
 
+        logger.info(String.format("Received request to validate file: %s with configuration: %s", request.getFilePath(), request.getValidationConfiguration()));
         return validationService.validate(request.getFilePath(), request.getValidationConfiguration());
     }
 }

@@ -1,10 +1,11 @@
 package com.leon.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Arrays;
 import java.util.Objects;
 
+@JsonIgnoreProperties
 public class FieldValidation
 {
     @JsonProperty("id")
@@ -183,5 +184,24 @@ public class FieldValidation
         int result = Objects.hash(getId(), getDescription(), getType(), getTimestampFormat(), canBeEmpty, getValidRegex(), getStringFormat(), getMaxDecimals(), getListDelimiterRegex(), getMinimumDelimitedValues(), getValidRange());
         result = 31 * result + Arrays.hashCode(getEnumeratedTypeValues());
         return result;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "FieldValidation{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", type='" + type + '\'' +
+                ", timestampFormat='" + timestampFormat + '\'' +
+                ", canBeEmpty=" + canBeEmpty +
+                ", enumeratedTypeValues=" + Arrays.toString(enumeratedTypeValues) +
+                ", validRegex='" + validRegex + '\'' +
+                ", stringFormat='" + stringFormat + '\'' +
+                ", maxDecimals=" + maxDecimals +
+                ", listDelimiterRegex='" + listDelimiterRegex + '\'' +
+                ", minimumDelimitedValues=" + minimumDelimitedValues +
+                ", validRange='" + validRange + '\'' +
+                '}';
     }
 }
