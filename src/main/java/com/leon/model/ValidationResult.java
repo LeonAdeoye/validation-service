@@ -1,11 +1,7 @@
 package com.leon.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
-
-import static java.util.stream.Stream.*;
 
 enum ResultType
 {
