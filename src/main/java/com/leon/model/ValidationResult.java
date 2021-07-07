@@ -1,6 +1,7 @@
 package com.leon.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 enum ResultType
@@ -34,6 +35,7 @@ public class ValidationResult
         this.errors.addAll(errors);
     }
 
+    @Override
     public String toString()
     {
         if(errors.size() != 0)
@@ -41,6 +43,12 @@ public class ValidationResult
         else
             result = ResultType.SUCCESS;
 
-        return "";
+        StringBuilder sb = new StringBuilder("{\"status\" : \"");
+        sb.append(result);
+        sb.append("\", \"errors\" : ");
+        sb.append(Arrays.toString(errors.toArray()));
+        sb.append("}");
+        System.out.println("sb: " + sb.toString());
+        return sb.toString();
     }
 }

@@ -3,6 +3,7 @@ package com.leon.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import java.util.Objects;
 
 @JsonIgnoreProperties
 public class ValidationConfiguration
@@ -54,5 +55,22 @@ public class ValidationConfiguration
                 ", rowStart=" + rowStart +
                 ", listOfFieldValidations=" + listOfFieldValidations +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+        ValidationConfiguration that = (ValidationConfiguration) o;
+        return getRowStart() == that.getRowStart() &&
+                getDelimiter().equals(that.getDelimiter()) &&
+                getListOfFieldValidations().equals(that.getListOfFieldValidations());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getDelimiter(), getRowStart(), getListOfFieldValidations());
     }
 }
