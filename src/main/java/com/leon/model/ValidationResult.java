@@ -7,7 +7,7 @@ import java.util.List;
 enum ResultType
 {
     SUCCESS,
-    FAILURE
+    ERROR
 }
 
 public class ValidationResult
@@ -18,6 +18,15 @@ public class ValidationResult
     public ValidationResult()
     {
         errors = new ArrayList<>();
+    }
+    public ValidationResult(String error)
+    {
+        errors = new ArrayList<>();
+        errors.add(error);
+    }
+    public ValidationResult(List<String> errors)
+    {
+        this.errors = new ArrayList<>(errors);
     }
 
     public void addError(String error)
@@ -35,20 +44,21 @@ public class ValidationResult
         this.errors.addAll(errors);
     }
 
-    @Override
-    public String toString()
+    public String toJSON()
     {
-        if(errors.size() != 0)
-            result = ResultType.FAILURE;
-        else
-            result = ResultType.SUCCESS;
-
+        result = errors.isEmpty() ? ResultType.SUCCESS : ResultType.ERROR;
         StringBuilder sb = new StringBuilder("{\"status\" : \"");
         sb.append(result);
-        sb.append("\", \"errors\" : ");
-        sb.append(Arrays.toString(errors.toArray()));
-        sb.append("}");
-        System.out.println("sb: " + sb.toString());
+        sb.append("\", \"errors\" : [");
+        for(int index = 0; index < errors.size(); ++index)
+        {
+            sb.append("\"");
+            sb.append(errors.get(index));
+            sb.append("\"");
+            if(index < errors.size() - 1)
+                sb.append(",");
+        }
+        sb.append("]}");
         return sb.toString();
     }
 }

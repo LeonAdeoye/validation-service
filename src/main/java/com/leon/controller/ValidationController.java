@@ -30,21 +30,21 @@ public class ValidationController
 
     @CrossOrigin
     @RequestMapping(value = "/validate", method={POST}, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE )
-    ValidationResult validate(@RequestBody ValidationRequest request)
+    String validate(@RequestBody ValidationRequest request)
     {
         if(request.getFilePath() == null || request.getFilePath().isEmpty())
         {
             logger.error("Validation request's file path cannot be null or an empty string.");
-            throw new IllegalArgumentException("Validation request's filepath cannot be null or an empty string.");
+            return new ValidationResult("Validation request's file path cannot be null or an empty string.").toJSON();
         }
 
         if(request.getValidationConfiguration() == null)
         {
-            logger.error("Validation request's validation configuration cannot be null.");
-            throw new IllegalArgumentException("Validation request's validation configuration cannot be null.");
+            logger.error("Validation request's configuration cannot be null.");
+            return new ValidationResult("Validation request's configuration cannot be null.").toJSON();
         }
 
         logger.info(String.format("Received request to validate file: %s with configuration: %s", request.getFilePath(), request.getValidationConfiguration()));
-        return validationService.validate(request.getFilePath(), request.getValidationConfiguration());
+        return validationService.validate(request.getFilePath(), request.getValidationConfiguration()).toJSON();
     }
 }

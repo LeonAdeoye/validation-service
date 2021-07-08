@@ -81,11 +81,6 @@ public class ValidationControllerTest
     }
 
     @Test
-    public void testHeartbeat() throws Exception
-    {
-    }
-
-    @Test
     public void validate_whenPassedEmptyFilePath_ShouldNeverCallValidationService() throws Exception
     {
         // Arrange
@@ -99,7 +94,7 @@ public class ValidationControllerTest
                 .andReturn().getResponse().getContentAsString();
         // Assert
         verify(validationService, never()).validate(any(), any());
-        //assertEquals("{\"status\" : \"ERROR\", \"errors\" : [\"File path cannot be null or empty.\"]}", response);
+        assertEquals("{\"status\" : \"ERROR\", \"errors\" : [\"Validation request's file path cannot be null or an empty string.\"]}", response);
     }
 
     @Test
@@ -116,7 +111,7 @@ public class ValidationControllerTest
                 .andReturn().getResponse().getContentAsString();
         // Assert
         verify(validationService, never()).validate(any(), any());
-        //assertEquals("{\"status\" : \"ERROR\", \"errors\" : [\"File path cannot be null or empty.\"]}", response);
+        assertEquals("{\"status\" : \"ERROR\", \"errors\" : [\"Validation request's file path cannot be null or an empty string.\"]}", response);
     }
 
     @Test
@@ -133,7 +128,7 @@ public class ValidationControllerTest
                 .andReturn().getResponse().getContentAsString();
         // Assert
         verify(validationService, never()).validate(any(), any());
-        //assertEquals("{\"status\" : \"ERROR\", \"errors\" : [\" Validation configuration cannot be null.\"]}", response);
+        assertEquals("{\"status\" : \"ERROR\", \"errors\" : [\"Validation request's configuration cannot be null.\"]}", response);
     }
 
     @Test
