@@ -21,16 +21,30 @@ public class TimestampValidatorTest
     private TimestampValidator timestampValidator;
 
     @Test
-    public void validate_whenPassedValueWithinTheRange_shouldReturnEmptyString()
+    public void validate_whenPassedValidTimestampValue_shouldReturnEmptyString()
     {
         // Arrange
-        String input = "23-DEC-2012 19:14:00.500";
+        String input = "23-12-2012";
         FieldValidation fieldValidation = new FieldValidation();
         fieldValidation.setType(Validator.TIMESTAMP);
-        //fieldValidation.setTimestampFormat("dd-MMM-yyyy HH:mm:ss.SSS");
+        fieldValidation.setTimestampFormat("dd-mm-yyyy");
         // Act
-        //String actualResult = timestampValidator.validate(input, fieldValidation);
+        String actualResult = timestampValidator.validate(input, fieldValidation);
         // Assert
-        //assertEquals("when passed value timestamp value, validate should return an empty string",  "", actualResult);
+        assertEquals("when passed valid timestamp value, validate should return an empty string",  "", actualResult);
+    }
+
+    @Test
+    public void validate_whenPassedInvalidTimestampValue_shouldReturnErrorString()
+    {
+        // Arrange
+        String input = "23-XX-2012";
+        FieldValidation fieldValidation = new FieldValidation();
+        fieldValidation.setType(Validator.TIMESTAMP);
+        fieldValidation.setTimestampFormat("dd-mm-yyyy");
+        // Act
+        String actualResult = timestampValidator.validate(input, fieldValidation);
+        // Assert
+        assertEquals("when passed invalid timestamp value, validate should return an empty string",  "The field value [23-XX-2012] does not match date timestamp value format.", actualResult);
     }
 }

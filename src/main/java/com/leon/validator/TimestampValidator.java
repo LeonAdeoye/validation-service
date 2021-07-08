@@ -3,8 +3,9 @@ package com.leon.validator;
 import com.leon.model.FieldValidation;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Component
 public class TimestampValidator implements Validator
@@ -20,9 +21,16 @@ public class TimestampValidator implements Validator
 
     private boolean validateTimestamp(String input, String format)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-        LocalDateTime formattedDate = LocalDateTime.parse(input, formatter);
-        String formattedDateString = formattedDate.format(formatter);
-        return formattedDateString.equals(input);
+        try
+        {
+            SimpleDateFormat simpleDateFormatter = new SimpleDateFormat(format);
+            Date formattedDate = simpleDateFormatter.parse(input);
+            String formattedDateString = simpleDateFormatter.format(formattedDate);
+            return formattedDateString.equals(input);
+        }
+        catch(ParseException pe)
+        {
+            return false;
+        }
     }
 }
