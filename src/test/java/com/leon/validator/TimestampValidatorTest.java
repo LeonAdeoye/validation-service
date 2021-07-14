@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.sql.Timestamp;
-
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -46,5 +43,19 @@ public class TimestampValidatorTest
         String actualResult = timestampValidator.validate(input, fieldValidation);
         // Assert
         assertEquals("when passed invalid timestamp value, validate should return an empty string",  "The field value [23-XX-2012] does not match date timestamp value format.", actualResult);
+    }
+
+    @Test
+    public void validate_whenPassedValidTimestampValue_shouldReturnErrorString()
+    {
+        // Arrange
+        String input = "23-12-2012 10:10:30";
+        FieldValidation fieldValidation = new FieldValidation();
+        fieldValidation.setType(Validator.TIMESTAMP);
+        fieldValidation.setTimestampFormat("dd-MM-yyyy HH:mm:ss");
+        // Act
+        String actualResult = timestampValidator.validate(input, fieldValidation);
+        // Assert
+        assertEquals("when passed invalid timestamp value, validate should return an empty string",  "", actualResult);
     }
 }
