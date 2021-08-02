@@ -49,7 +49,7 @@ public class ValidationConfiguration
         this.listOfFieldValidations = listOfFieldValidations;
     }
 
-    public boolean isDuplicatesAllowed()
+    public boolean areDuplicatesAllowed()
     {
         return duplicatesAllowed;
     }
@@ -77,7 +77,7 @@ public class ValidationConfiguration
         if(o == null || getClass() != o.getClass()) return false;
         ValidationConfiguration that = (ValidationConfiguration) o;
         return getRowStart() == that.getRowStart() &&
-                isDuplicatesAllowed() == that.isDuplicatesAllowed() &&
+                areDuplicatesAllowed() == that.areDuplicatesAllowed() &&
                 getDelimiter().equals(that.getDelimiter()) &&
                 getListOfFieldValidations().equals(that.getListOfFieldValidations());
     }
@@ -85,6 +85,6 @@ public class ValidationConfiguration
     @Override
     public int hashCode()
     {
-        return Objects.hash(getDelimiter(), getRowStart(), isDuplicatesAllowed(), getListOfFieldValidations());
+        return Objects.hash(getDelimiter(), getRowStart(), areDuplicatesAllowed(), getListOfFieldValidations());
     }
 }

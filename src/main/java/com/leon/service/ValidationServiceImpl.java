@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,6 +60,7 @@ public class ValidationServiceImpl implements ValidationService
     public ValidationResult validate(String filePath, ValidationConfiguration validationConfiguration)
     {
         ValidationResult result = new ValidationResult();
+        hashSetOfRows.clear();
         try
         {
             Flux<DataRow> rows = fileReaderService.readFile(filePath, validationConfiguration.getDelimiter());
@@ -90,7 +92,11 @@ public class ValidationServiceImpl implements ValidationService
     private ValidationResult checkIfDuplicate(DataRow dataRow, ValidationConfiguration validationConfiguration)
     {
         ValidationResult result = new ValidationResult();
-        int hash = dataRow.hashCode();
+
+        if(validationConfiguration.areDuplicatesAllowed())
+            return result;
+
+        int hash = Arrays.hashCode(dataRow.getRowValues());
 
         if(hashSetOfRows.contains(hash))
             result.addError("The row already exists: " + dataRow.toString());
