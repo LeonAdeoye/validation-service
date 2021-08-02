@@ -78,7 +78,6 @@ public class ValidationServiceImpl implements ValidationService
         }
         finally
         {
-            System.out.println("Size: " + result.getErrors().size());
             return result;
         }
     }
