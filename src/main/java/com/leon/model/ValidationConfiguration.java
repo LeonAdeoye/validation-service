@@ -12,6 +12,8 @@ public class ValidationConfiguration
     private String delimiter = ",";
     @JsonProperty("rowStart")
     private int rowStart = 0;
+    @JsonProperty("duplicatesAllowed")
+    private boolean duplicatesAllowed = false;
     @JsonProperty("listOfFieldValidations")
     private List<FieldValidation> listOfFieldValidations;
 
@@ -47,12 +49,23 @@ public class ValidationConfiguration
         this.listOfFieldValidations = listOfFieldValidations;
     }
 
+    public boolean isDuplicatesAllowed()
+    {
+        return duplicatesAllowed;
+    }
+
+    public void setDuplicatesAllowed(boolean duplicatesAllowed)
+    {
+        this.duplicatesAllowed = duplicatesAllowed;
+    }
+
     @Override
     public String toString()
     {
         return "ValidationConfiguration{" +
-                "delimiter=" + delimiter +
+                "delimiter='" + delimiter + '\'' +
                 ", rowStart=" + rowStart +
+                ", duplicatesAllowed=" + duplicatesAllowed +
                 ", listOfFieldValidations=" + listOfFieldValidations +
                 '}';
     }
@@ -64,6 +77,7 @@ public class ValidationConfiguration
         if(o == null || getClass() != o.getClass()) return false;
         ValidationConfiguration that = (ValidationConfiguration) o;
         return getRowStart() == that.getRowStart() &&
+                isDuplicatesAllowed() == that.isDuplicatesAllowed() &&
                 getDelimiter().equals(that.getDelimiter()) &&
                 getListOfFieldValidations().equals(that.getListOfFieldValidations());
     }
@@ -71,6 +85,6 @@ public class ValidationConfiguration
     @Override
     public int hashCode()
     {
-        return Objects.hash(getDelimiter(), getRowStart(), getListOfFieldValidations());
+        return Objects.hash(getDelimiter(), getRowStart(), isDuplicatesAllowed(), getListOfFieldValidations());
     }
 }

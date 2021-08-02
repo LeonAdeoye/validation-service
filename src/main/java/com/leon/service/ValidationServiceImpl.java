@@ -11,12 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ValidationServiceImpl implements ValidationService
 {
     private static final Logger logger = LoggerFactory.getLogger(ValidationServiceImpl.class);
+    private Set<Integer> hashSetOfRows = new HashSet<>();
 
     @Autowired
     FileReaderService fileReaderService;
@@ -60,7 +64,11 @@ public class ValidationServiceImpl implements ValidationService
             Flux<DataRow> rows = fileReaderService.readFile(filePath, validationConfiguration.getDelimiter());
             rows.parallel()
                 .runOn(Schedulers.parallel())
-                .doOnNext(dataRow -> result.concatenateErrors(validateRow(dataRow, validationConfiguration).getErrors()))
+                .doOnNext(dataRow ->
+                {
+                    result.concatenateErrors(checkIfDuplicate(dataRow, validationConfiguration).getErrors());
+                    result.concatenateErrors(validateRow(dataRow, validationConfiguration).getErrors());
+                })
                 .sequential()
                 .blockLast();
         }
@@ -78,6 +86,19 @@ public class ValidationServiceImpl implements ValidationService
     private String addErrorRowDetails(int row, int column)
     {
         return String.format("Validation error found at row %d and column %d. ", row, column);
+    }
+
+    private ValidationResult checkIfDuplicate(DataRow dataRow, ValidationConfiguration validationConfiguration)
+    {
+        ValidationResult result = new ValidationResult();
+        int hash = dataRow.hashCode();
+
+        if(hashSetOfRows.contains(hash))
+            result.addError("The row already exists: " + dataRow.toString());
+        else
+            hashSetOfRows.add(hash);
+
+        return result;
     }
 
     private ValidationResult validateRow(DataRow dataRow, ValidationConfiguration validationConfiguration)
