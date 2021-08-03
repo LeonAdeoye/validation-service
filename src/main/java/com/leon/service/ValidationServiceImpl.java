@@ -64,8 +64,8 @@ public class ValidationServiceImpl implements ValidationService
                 .runOn(Schedulers.parallel())
                 .doOnNext(dataRow ->
                 {
-                    result.concatenateErrors(checkIfDuplicate(dataRow, validationConfiguration).getErrors());
-                    result.concatenateErrors(validateRow(dataRow, validationConfiguration).getErrors());
+                    result.concatenateErrors(isDuplicate(dataRow, validationConfiguration).getErrors());
+                    result.concatenateErrors(isValidRow(dataRow, validationConfiguration).getErrors());
                 })
                 .sequential()
                 .blockLast();
@@ -85,7 +85,7 @@ public class ValidationServiceImpl implements ValidationService
         return String.format("Validation error found at row %d and column %d. ", row, column);
     }
 
-    private ValidationResult checkIfDuplicate(DataRow dataRow, ValidationConfiguration validationConfiguration)
+    private ValidationResult isDuplicate(DataRow dataRow, ValidationConfiguration validationConfiguration)
     {
         ValidationResult result = new ValidationResult();
 
@@ -102,7 +102,7 @@ public class ValidationServiceImpl implements ValidationService
         return result;
     }
 
-    private ValidationResult validateRow(DataRow dataRow, ValidationConfiguration validationConfiguration)
+    private ValidationResult isValidRow(DataRow dataRow, ValidationConfiguration validationConfiguration)
     {
         ValidationResult result = new ValidationResult();
         List<FieldValidation> listOfValidations = validationConfiguration.getListOfFieldValidations();
