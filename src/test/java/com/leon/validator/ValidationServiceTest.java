@@ -11,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.net.URL;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,7 +38,7 @@ public class ValidationServiceTest
 
         FieldValidation secondFieldValidation = new FieldValidation();
         secondFieldValidation.setId(2);
-        secondFieldValidation.setDescription("wealth");
+        secondFieldValidation.setDescription("Wealth");
         secondFieldValidation.setCanBeEmpty(false);
         secondFieldValidation.setType(Validator.STRING);
 
@@ -60,7 +60,8 @@ public class ValidationServiceTest
         // Act
         ValidationResult actualResult = validationService.validate(testFilePath, validationConfiguration);
         // Assert
-        assertEquals("Validation that duplicates are not allowed",  Arrays.asList("The row already exists: DataRow{rowNumber=4, rowValues=[Harper, 1]}"), actualResult.getErrors());
+        assertEquals("Duplicate validation error count is 1",  1, actualResult.getErrors().size());
+        assertTrue("Duplicate validation error message matches", actualResult.getErrors().get(0).matches("The row: \\d with values: \\[Harper, 1\\] is a duplicate of row: \\d"));
     }
     @Test
     public void validate_duplicates_allowed() throws Exception
@@ -70,6 +71,6 @@ public class ValidationServiceTest
         // Act
         ValidationResult actualResult = validationService.validate(testFilePath, validationConfiguration);
         // Assert
-        assertEquals("Validation that duplicates are allowed",  Arrays.asList(), actualResult.getErrors());
+        assertEquals("Duplicate validation error count is 0",  0, actualResult.getErrors().size());
     }
 }

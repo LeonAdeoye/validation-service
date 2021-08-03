@@ -11,17 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ValidationServiceImpl implements ValidationService
 {
     private static final Logger logger = LoggerFactory.getLogger(ValidationServiceImpl.class);
-    private Set<Integer> hashSetOfRows = new HashSet<>();
+    private Map<Integer, Integer> rowsHashMap = new HashMap<>();
 
     @Autowired
     FileReaderService fileReaderService;
@@ -60,7 +56,7 @@ public class ValidationServiceImpl implements ValidationService
     public ValidationResult validate(String filePath, ValidationConfiguration validationConfiguration)
     {
         ValidationResult result = new ValidationResult();
-        hashSetOfRows.clear();
+        rowsHashMap.clear();
         try
         {
             Flux<DataRow> rows = fileReaderService.readFile(filePath, validationConfiguration.getDelimiter());
@@ -98,10 +94,10 @@ public class ValidationServiceImpl implements ValidationService
 
         int hash = Arrays.hashCode(dataRow.getRowValues());
 
-        if(hashSetOfRows.contains(hash))
-            result.addError("The row already exists: " + dataRow.toString());
+        if(rowsHashMap.containsKey(hash))
+            result.addError("The row: " + dataRow.getRowNumber() + " with values: " + Arrays.toString(dataRow.getRowValues()) + " is a duplicate of row: " + rowsHashMap.get(hash));
         else
-            hashSetOfRows.add(hash);
+            rowsHashMap.put(hash, dataRow.getRowNumber());
 
         return result;
     }
