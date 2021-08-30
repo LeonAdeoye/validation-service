@@ -18,39 +18,10 @@ public class ValidationServiceImpl implements ValidationService
 {
     private static final Logger logger = LoggerFactory.getLogger(ValidationServiceImpl.class);
     private Map<Integer, Integer> rowsHashMap = new HashMap<>();
+    private Validator validator;
 
     @Autowired
     FileReaderService fileReaderService;
-
-    @Autowired
-    IntegerValidator integerValidator;
-
-    @Autowired
-    DoubleValidator doubleValidator;
-
-    @Autowired
-    StringValidator stringValidator;
-
-    @Autowired
-    CurrencyValidator currencyValidator;
-
-    @Autowired
-    BooleanValidator booleanValidator;
-
-    @Autowired
-    TimestampValidator timestampValidator;
-
-    @Autowired
-    RegexValidator regexValidator;
-
-    @Autowired
-    RangeValidator rangeValidator;
-
-    @Autowired
-    DelimitedListValidator delimitedListValidator;
-
-    @Autowired
-    EnumeratedTypeValidator enumeratedTypeValidator;
 
     @Override
     public ValidationResult validate(String filePath, ValidationConfiguration validationConfiguration)
@@ -127,41 +98,12 @@ public class ValidationServiceImpl implements ValidationService
 
             String validationResult;
 
-            switch(listOfValidations.get(columnIndex).getType().toUpperCase())
-            {
-                case Validator.INTEGER:
-                    validationResult = integerValidator.validate(fieldValue, fieldValidation);
-                    break;
-                case Validator.DOUBLE:
-                    validationResult = doubleValidator.validate(fieldValue, fieldValidation);
-                    break;
-                case Validator.STRING:
-                    validationResult = stringValidator.validate(fieldValue, fieldValidation);
-                    break;
-                case Validator.CURRENCY:
-                    validationResult = currencyValidator.validate(fieldValue, fieldValidation);
-                    break;
-                case Validator.BOOLEAN:
-                    validationResult =  booleanValidator.validate(fieldValue, fieldValidation);
-                    break;
-                case Validator.REGEX:
-                    validationResult = regexValidator.validate(fieldValue, fieldValidation);
-                    break;
-                case Validator.DELIMITED:
-                    validationResult = delimitedListValidator.validate(fieldValue, fieldValidation);
-                    break;
-                case Validator.TIMESTAMP:
-                    validationResult = timestampValidator.validate(fieldValue, fieldValidation);
-                    break;
-                case Validator.RANGE:
-                    validationResult = rangeValidator.validate(fieldValue, fieldValidation);
-                    break;
-                case Validator.ENUMERATED:
-                    validationResult = enumeratedTypeValidator.validate(fieldValue, fieldValidation);
-                    break;
-                default:
-                    validationResult = String.format("field validation type %s is unsupported.", listOfValidations.get(columnIndex).getType());
-            }
+            ValidatorFactory validatorFactory = new ValidatorFactory();
+            validator = validatorFactory.create(ValidatorType.valueOf(listOfValidations.get(columnIndex).getType().toUpperCase()));
+            if(validator != null)
+                validationResult = validator.validate(fieldValue, fieldValidation);
+            else
+                validationResult = String.format("field validation type %s is unsupported.", listOfValidations.get(columnIndex).getType());
 
             if(!validationResult.isEmpty())
             {
