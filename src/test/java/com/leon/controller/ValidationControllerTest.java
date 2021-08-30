@@ -8,6 +8,7 @@ import com.leon.model.ValidationRequest;
 import com.leon.model.ValidationResult;
 import com.leon.service.ValidationService;
 import com.leon.validator.Validator;
+import com.leon.validator.ValidatorType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,7 +67,7 @@ public class ValidationControllerTest
         FieldValidation field = new FieldValidation();
         field.setId(0);
         field.setDescription("integer field");
-        field.setType(Validator.INTEGER);
+        field.setType(ValidatorType.INTEGER.toString());
 
         List<FieldValidation> fields = new ArrayList<>();
         fields.add(field);

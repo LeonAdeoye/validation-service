@@ -23,7 +23,7 @@ public class TimestampValidatorTest
         // Arrange
         String input = "23-12-2012";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.TIMESTAMP);
+        fieldValidation.setType(ValidatorType.TIMESTAMP.toString());
         fieldValidation.setTimestampFormat("dd-mm-yyyy");
         // Act
         String actualResult = timestampValidator.validate(input, fieldValidation);
@@ -37,7 +37,7 @@ public class TimestampValidatorTest
         // Arrange
         String input = "23-XX-2012";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.TIMESTAMP);
+        fieldValidation.setType(ValidatorType.TIMESTAMP.toString());
         fieldValidation.setTimestampFormat("dd-mm-yyyy");
         // Act
         String actualResult = timestampValidator.validate(input, fieldValidation);
@@ -51,7 +51,7 @@ public class TimestampValidatorTest
         // Arrange
         String input = "23-12-2012 10:10:30";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.TIMESTAMP);
+        fieldValidation.setType(ValidatorType.TIMESTAMP.toString());
         fieldValidation.setTimestampFormat("dd-MM-yyyy HH:mm:ss");
         // Act
         String actualResult = timestampValidator.validate(input, fieldValidation);

@@ -100,6 +100,7 @@ public class ValidationServiceImpl implements ValidationService
 
             ValidatorFactory validatorFactory = new ValidatorFactory();
             validator = validatorFactory.create(ValidatorType.valueOf(listOfValidations.get(columnIndex).getType().toUpperCase()));
+
             if(validator != null)
                 validationResult = validator.validate(fieldValue, fieldValidation);
             else

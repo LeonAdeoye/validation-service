@@ -34,13 +34,13 @@ public class ValidationServiceTest
         firstFieldValidation.setId(1);
         firstFieldValidation.setDescription("Name");
         firstFieldValidation.setCanBeEmpty(false);
-        firstFieldValidation.setType(Validator.STRING);
+        firstFieldValidation.setType(ValidatorType.STRING.toString());
 
         FieldValidation secondFieldValidation = new FieldValidation();
         secondFieldValidation.setId(2);
         secondFieldValidation.setDescription("Wealth");
         secondFieldValidation.setCanBeEmpty(false);
-        secondFieldValidation.setType(Validator.STRING);
+        secondFieldValidation.setType(ValidatorType.STRING.toString());
 
         validationConfiguration.setDelimiter(",");
         validationConfiguration.setRowStart(1);
