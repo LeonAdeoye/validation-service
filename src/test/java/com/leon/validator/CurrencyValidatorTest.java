@@ -24,7 +24,7 @@ public class CurrencyValidatorTest
         // Arrange
         String input = "JPY";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.CURRENCY);
+        fieldValidation.setType(ValidatorType.CURRENCY.toString());
         // Act
         String actualResult = currencyValidator.validate(input, fieldValidation);
         // Assert
@@ -37,7 +37,7 @@ public class CurrencyValidatorTest
         // Arrange
         String input = "jpy";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.BOOLEAN);
+        fieldValidation.setType(ValidatorType.CURRENCY.toString());
         // Act
         String actualResult = currencyValidator.validate(input, fieldValidation);
         // Assert
@@ -50,7 +50,7 @@ public class CurrencyValidatorTest
         // Arrange
         String input = "UsD";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.BOOLEAN);
+        fieldValidation.setType(ValidatorType.CURRENCY.toString());
         // Act
         String actualResult = currencyValidator.validate(input, fieldValidation);
         // Assert
@@ -63,7 +63,7 @@ public class CurrencyValidatorTest
         // Arrange
         String input = "GBPS";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.BOOLEAN);
+        fieldValidation.setType(ValidatorType.CURRENCY.toString());
         // Act
         String actualResult = currencyValidator.validate(input, fieldValidation);
         // Assert

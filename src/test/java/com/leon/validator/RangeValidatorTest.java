@@ -24,7 +24,7 @@ public class RangeValidatorTest
         // Arrange
         String input = "5";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.RANGE);
+        fieldValidation.setType(ValidatorType.RANGE.toString());
         fieldValidation.setValidRange("1,10");
         // Act
         String actualResult = rangeValidator.validate(input, fieldValidation);
@@ -38,7 +38,7 @@ public class RangeValidatorTest
         // Arrange
         String input = "15";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.RANGE);
+        fieldValidation.setType(ValidatorType.RANGE.toString());
         fieldValidation.setValidRange("1,10");
         // Act
         String actualResult = rangeValidator.validate(input, fieldValidation);
@@ -52,7 +52,7 @@ public class RangeValidatorTest
         // Arrange
         String input = "1";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.RANGE);
+        fieldValidation.setType(ValidatorType.RANGE.toString());
         fieldValidation.setValidRange("1,10");
         // Act
         String actualResult = rangeValidator.validate(input, fieldValidation);
@@ -66,7 +66,7 @@ public class RangeValidatorTest
         // Arrange
         String input = "10";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.RANGE);
+        fieldValidation.setType(ValidatorType.RANGE.toString());
         fieldValidation.setValidRange("1,10");
         // Act
         String actualResult = rangeValidator.validate(input, fieldValidation);
@@ -80,7 +80,7 @@ public class RangeValidatorTest
         // Arrange
         String input = "0";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.RANGE);
+        fieldValidation.setType(ValidatorType.RANGE.toString());
         fieldValidation.setValidRange("1,10");
         // Act
         String actualResult = rangeValidator.validate(input, fieldValidation);

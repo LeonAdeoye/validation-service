@@ -24,7 +24,7 @@ public class StringValidatorTest
         // Arrange
         String input = "JPY";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.STRING);
+        fieldValidation.setType(ValidatorType.STRING.toString());
         fieldValidation.setStringFormat("UPPERCASE");
         // Act
         String actualResult = stringValidator.validate(input, fieldValidation);
@@ -38,7 +38,7 @@ public class StringValidatorTest
         // Arrange
         String input = "jpy";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.STRING);
+        fieldValidation.setType(ValidatorType.STRING.toString());
         fieldValidation.setStringFormat("UPPERCASE");
         // Act
         String actualResult = stringValidator.validate(input, fieldValidation);
@@ -52,7 +52,7 @@ public class StringValidatorTest
         // Arrange
         String input = "jpy";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.STRING);
+        fieldValidation.setType(ValidatorType.STRING.toString());
         fieldValidation.setStringFormat("LOWERCASE");
         // Act
         String actualResult = stringValidator.validate(input, fieldValidation);
@@ -66,7 +66,7 @@ public class StringValidatorTest
         // Arrange
         String input = "JPY";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.STRING);
+        fieldValidation.setType(ValidatorType.STRING.toString());
         fieldValidation.setStringFormat("LOWERCASE");
         // Act
         String actualResult = stringValidator.validate(input, fieldValidation);
@@ -80,7 +80,7 @@ public class StringValidatorTest
         // Arrange
         String input = "@#$%%";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.STRING);
+        fieldValidation.setType(ValidatorType.STRING.toString());
         fieldValidation.setStringFormat("LOWERCASE");
         // Act
         String actualResult = stringValidator.validate(input, fieldValidation);
@@ -94,7 +94,7 @@ public class StringValidatorTest
         // Arrange
         String input = "12345.678910";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.STRING);
+        fieldValidation.setType(ValidatorType.STRING.toString());
         fieldValidation.setStringFormat("LOWERCASE");
         // Act
         String actualResult = stringValidator.validate(input, fieldValidation);

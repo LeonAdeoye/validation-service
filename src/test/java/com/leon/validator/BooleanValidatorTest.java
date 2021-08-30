@@ -25,7 +25,7 @@ public class BooleanValidatorTest
         // Arrange
         String input = "true";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.BOOLEAN);
+        fieldValidation.setType(ValidatorType.BOOLEAN.toString());
         // Act
         String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
@@ -38,7 +38,7 @@ public class BooleanValidatorTest
         // Arrange
         String input = "TRUE";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.BOOLEAN);
+        fieldValidation.setType(ValidatorType.BOOLEAN.toString());
         // Act
         String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
@@ -51,7 +51,7 @@ public class BooleanValidatorTest
         // Arrange
         String input = "True";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.BOOLEAN);
+        fieldValidation.setType(ValidatorType.BOOLEAN.toString());
         // Act
         String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
@@ -64,7 +64,7 @@ public class BooleanValidatorTest
         // Arrange
         String input = "false";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.BOOLEAN);
+        fieldValidation.setType(ValidatorType.BOOLEAN.toString());
         // Act
         String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
@@ -77,7 +77,7 @@ public class BooleanValidatorTest
         // Arrange
         String input = "FALSE";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.BOOLEAN);
+        fieldValidation.setType(ValidatorType.BOOLEAN.toString());
         // Act
         String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
@@ -90,7 +90,7 @@ public class BooleanValidatorTest
         // Arrange
         String input = "False";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.BOOLEAN);
+        fieldValidation.setType(ValidatorType.BOOLEAN.toString());
         // Act
         String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert
@@ -103,7 +103,7 @@ public class BooleanValidatorTest
         // Arrange
         String input = "TRUTHY";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.BOOLEAN);
+        fieldValidation.setType(ValidatorType.BOOLEAN.toString());
         // Act
         String actualResult = booleanValidator.validate(input, fieldValidation);
         // Assert

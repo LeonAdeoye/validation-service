@@ -24,7 +24,7 @@ public class DelimitedListValidatorTest
         // Arrange
         String input = "10|11|12";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.DELIMITED);
+        fieldValidation.setType(ValidatorType.DELIMITED.toString());
         fieldValidation.setListDelimiterRegex("\\|");
         // Act
         String actualResult = delimitedListValidator.validate(input, fieldValidation);
@@ -38,7 +38,7 @@ public class DelimitedListValidatorTest
         // Arrange
         String input = "Horatio";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.DELIMITED);
+        fieldValidation.setType(ValidatorType.DELIMITED.toString());
         fieldValidation.setListDelimiterRegex("\\|");
         // Act
         String actualResult = delimitedListValidator.validate(input, fieldValidation);
@@ -52,7 +52,7 @@ public class DelimitedListValidatorTest
         // Arrange
         String input = "10~10";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.DELIMITED);
+        fieldValidation.setType(ValidatorType.DELIMITED.toString());
         fieldValidation.setListDelimiterRegex("\\|");
         fieldValidation.setMinimumDelimitedValues(2);
         // Act
@@ -67,7 +67,7 @@ public class DelimitedListValidatorTest
         // Arrange
         String input = "10~20~30";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.DELIMITED);
+        fieldValidation.setType(ValidatorType.DELIMITED.toString());
         fieldValidation.setListDelimiterRegex("~");
         fieldValidation.setMinimumDelimitedValues(2);
         // Act
@@ -82,7 +82,7 @@ public class DelimitedListValidatorTest
         // Arrange
         String input = "10~20~30";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.DELIMITED);
+        fieldValidation.setType(ValidatorType.DELIMITED.toString());
         fieldValidation.setListDelimiterRegex("~");
         fieldValidation.setMinimumDelimitedValues(5);
         // Act

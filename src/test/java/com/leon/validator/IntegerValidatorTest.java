@@ -25,7 +25,7 @@ public class IntegerValidatorTest
         // Arrange
         String input = "10";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.INTEGER);
+        fieldValidation.setType(ValidatorType.INTEGER.toString());
         // Act
         String actualResult = integerValidator.validate(input, fieldValidation);
         // Assert
@@ -38,7 +38,7 @@ public class IntegerValidatorTest
         // Arrange
         String input = "-10";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.INTEGER);
+        fieldValidation.setType(ValidatorType.INTEGER.toString());
         // Act
         String actualResult = integerValidator.validate(input, fieldValidation);
         // Assert
@@ -51,7 +51,7 @@ public class IntegerValidatorTest
         // Arrange
         String input = "+10";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.INTEGER);
+        fieldValidation.setType(ValidatorType.INTEGER.toString());
         // Act
         String actualResult = integerValidator.validate(input, fieldValidation);
         // Assert
@@ -64,7 +64,7 @@ public class IntegerValidatorTest
         // Arrange
         String input = "10.0";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.INTEGER);
+        fieldValidation.setType(ValidatorType.INTEGER.toString());
         // Act
         String actualResult = integerValidator.validate(input, fieldValidation);
         // Assert
@@ -77,7 +77,7 @@ public class IntegerValidatorTest
         // Arrange
         String input = "Horatio";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.INTEGER);
+        fieldValidation.setType(ValidatorType.INTEGER.toString());
         // Act
         String actualResult = integerValidator.validate(input, fieldValidation);
         // Assert

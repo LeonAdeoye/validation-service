@@ -24,7 +24,7 @@ public class DoubleValidatorTest
         // Arrange
         String input = "10.0";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.DOUBLE);
+        fieldValidation.setType(ValidatorType.DOUBLE.toString());
         // Act
         String actualResult = doubleValidator.validate(input, fieldValidation);
         // Assert
@@ -37,7 +37,7 @@ public class DoubleValidatorTest
         // Arrange
         String input = "Horatio";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.DOUBLE);
+        fieldValidation.setType(ValidatorType.DOUBLE.toString());
         // Act
         String actualResult = doubleValidator.validate(input, fieldValidation);
         // Assert
@@ -50,7 +50,7 @@ public class DoubleValidatorTest
         // Arrange
         String input = "10";
         FieldValidation fieldValidation = new FieldValidation();
-        fieldValidation.setType(Validator.DOUBLE);
+        fieldValidation.setType(ValidatorType.DOUBLE.toString());
         // Act
         String actualResult = doubleValidator.validate(input, fieldValidation);
         // Assert
