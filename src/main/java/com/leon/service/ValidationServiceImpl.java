@@ -18,7 +18,6 @@ public class ValidationServiceImpl implements ValidationService
 {
     private static final Logger logger = LoggerFactory.getLogger(ValidationServiceImpl.class);
     private Map<Integer, Integer> rowsHashMap = new HashMap<>();
-    private Validator validator;
 
     @Autowired
     FileReaderService fileReaderService;
@@ -80,39 +79,49 @@ public class ValidationServiceImpl implements ValidationService
 
         if(dataRow.getRowValues().length != listOfValidations.size())
         {
-            result.addError(String.format("Row length of %d is not equal to validation list size of %d", dataRow.getRowValues().length, listOfValidations.size()));
+            String error = String.format("Row length of %d is not equal to validation list size of %d", dataRow.getRowValues().length, listOfValidations.size());
+            logger.error(error);
+            result.addError(error);
             return result;
         }
 
         for(int columnIndex = 0; columnIndex < listOfValidations.size(); ++columnIndex)
         {
-            FieldValidation fieldValidation = listOfValidations.get(columnIndex);
-            String errorRowDetails = addErrorRowDetails(dataRow.getRowNumber(), columnIndex);
-            String fieldValue = dataRow.getRowValues()[columnIndex];
-
-            if(fieldValue.isEmpty() && fieldValidation.cannotBeEmpty())
-            {
-                result.addError(errorRowDetails + "The field value is empty.");
-                continue;
-            }
-
-            String validationResult;
-
-            ValidatorFactory validatorFactory = new ValidatorFactory();
-            validator = validatorFactory.create(ValidatorType.valueOf(listOfValidations.get(columnIndex).getType().toUpperCase()));
-
-            if(validator != null)
-                validationResult = validator.validate(fieldValue, fieldValidation);
-            else
-                validationResult = String.format("field validation type %s is unsupported.", listOfValidations.get(columnIndex).getType());
-
-            if(!validationResult.isEmpty())
-            {
-                String error = errorRowDetails + validationResult;
-                logger.error(error);
+            String error = validateColumn(listOfValidations.get(columnIndex), dataRow, columnIndex);
+            if(!error.isEmpty())
                 result.addError(error);
-            }
         }
+
         return result;
+    }
+
+    private String validateColumn(FieldValidation fieldValidation, DataRow dataRow, int columnIndex)
+    {
+        String errorRowDetails = addErrorRowDetails(dataRow.getRowNumber(), columnIndex);
+        String fieldValue = dataRow.getRowValues()[columnIndex];
+        String error;
+
+        if(fieldValue.isEmpty() && fieldValidation.cannotBeEmpty())
+        {
+            error = errorRowDetails + "The field value is empty.";
+            logger.error(error);
+            return error;
+        }
+
+        Validator validator = ValidatorFactory.create(ValidatorType.valueOf(fieldValidation.getType().toUpperCase()));
+
+        String validationResult;
+        if(validator != null)
+            validationResult = validator.validate(fieldValue, fieldValidation);
+        else
+            validationResult = String.format("field validation type %s is unsupported.", fieldValidation.getType());
+
+        if(!validationResult.isEmpty())
+        {
+            error = errorRowDetails + validationResult;
+            logger.error(error);
+            return error;
+        }
+        return validationResult;
     }
 }

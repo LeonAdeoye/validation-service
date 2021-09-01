@@ -2,7 +2,7 @@ package com.leon.validator;
 
 public class ValidatorFactory
 {
-    public Validator create(ValidatorType validatorType)
+    public static Validator create(ValidatorType validatorType)
     {
         switch(validatorType)
         {
