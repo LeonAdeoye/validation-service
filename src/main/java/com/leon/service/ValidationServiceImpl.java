@@ -35,7 +35,7 @@ public class ValidationServiceImpl implements ValidationService
                 .doOnNext(dataRow ->
                 {
                     result.concatenateErrors(isDuplicate(dataRow, validationConfiguration).getErrors());
-                    result.concatenateErrors(isValidRow(dataRow, validationConfiguration).getErrors());
+                    result.concatenateErrors(validateRow(dataRow, validationConfiguration).getErrors());
                 })
                 .sequential()
                 .blockLast();
@@ -72,7 +72,7 @@ public class ValidationServiceImpl implements ValidationService
         return result;
     }
 
-    private ValidationResult isValidRow(DataRow dataRow, ValidationConfiguration validationConfiguration)
+    private ValidationResult validateRow(DataRow dataRow, ValidationConfiguration validationConfiguration)
     {
         ValidationResult result = new ValidationResult();
         List<FieldValidation> listOfValidations = validationConfiguration.getListOfFieldValidations();
