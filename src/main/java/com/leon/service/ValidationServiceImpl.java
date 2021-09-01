@@ -34,7 +34,7 @@ public class ValidationServiceImpl implements ValidationService
                 .runOn(Schedulers.parallel())
                 .doOnNext(dataRow ->
                 {
-                    result.concatenateErrors(isDuplicate(dataRow, validationConfiguration).getErrors());
+                    result.concatenateErrors(checkIfDuplicate(dataRow, validationConfiguration).getErrors());
                     result.concatenateErrors(validateRow(dataRow, validationConfiguration).getErrors());
                 })
                 .sequential()
@@ -55,7 +55,7 @@ public class ValidationServiceImpl implements ValidationService
         return String.format("Validation error found at row %d and column %d. ", row, column);
     }
 
-    private ValidationResult isDuplicate(DataRow dataRow, ValidationConfiguration validationConfiguration)
+    private ValidationResult checkIfDuplicate(DataRow dataRow, ValidationConfiguration validationConfiguration)
     {
         ValidationResult result = new ValidationResult();
 
