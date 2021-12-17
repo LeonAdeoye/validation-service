@@ -4,6 +4,7 @@ import com.leon.model.FieldValidation;
 import com.leon.model.ValidationConfiguration;
 import com.leon.model.ValidationResult;
 import com.leon.service.ValidationService;
+import com.sun.jndi.toolkit.url.Uri;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,7 +50,7 @@ public class ValidationServiceTest
         URL resource = getClass().getClassLoader().getResource("test-data.csv");
         if (resource == null)
             throw new IllegalArgumentException("test-data.csv file not found.");
-        testFilePath = resource.toURI().getRawPath();
+        testFilePath = resource.toURI().getPath();
     }
 
     @Test

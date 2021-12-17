@@ -43,6 +43,7 @@ public class ValidationServiceImpl implements ValidationService
         catch(Exception e)
         {
             logger.error(e.getMessage());
+            result.concatenateErrors(new ArrayList<String>(Arrays.asList(e.getMessage())));
         }
         finally
         {
